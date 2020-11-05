@@ -48,6 +48,29 @@ namespace AddressBookADO
                 
             }
         }
+        public string AddAddress(AddressBookModel model) {
+            try
+            {
+                using (this.connection)
+                {
+                    SqlCommand command = new SqlCommand("sp.InsertValues", this.connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@first_name", model.firstName);
+                    command.Parameters.AddWithValue("@last_name",model.lastName);
+                    command.Parameters.AddWithValue("@address", model.address);
+                    command.Parameters.AddWithValue("@city", model.city);
+                    command.Parameters.AddWithValue("@state", model.state);
+                    command.Parameters.AddWithValue("@zip", model.zip);
+                    command.Parameters.AddWithValue("@phone", model.phone);
+                    command.Parameters.AddWithValue("@emailid", model.emailid);
+                    return "Added succesfully";
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
     }
 

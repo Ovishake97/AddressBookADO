@@ -6,8 +6,7 @@ namespace AddressBookADO
     {
         static void Main(string[] args)
         {
-            AddressBookAdapter addressBook = new AddressBookAdapter();
-            addressBook.CreateTable();
+            
         }
     }
 }
