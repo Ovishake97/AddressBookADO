@@ -51,6 +51,9 @@ namespace MSTest
             bool result = adapter.UpdateTable(@"delete from Address_Model where first_name ='Nikhil'");
             Assert.IsTrue(result);
         }
+        /// The GetPersons method is called and a query is passed to get the people from 
+        /// a particular city
+        /// The test checks whether it is returning the expected list
         [TestMethod]
         public void GivenQueryGivesPeopleFromACity() {
             List<string> expected = new List<string>();
@@ -59,6 +62,9 @@ namespace MSTest
             expected.Add("Pooja");
             expected.Equals(actual);
         }
+        /// The GetPersons method is called and a query is passed to get the people from 
+        /// a particular city
+        /// The test checks whether it is returning the expected list
         [TestMethod]
         public void GivenQueryGivesPeopleFromAState()
         {
@@ -68,6 +74,25 @@ namespace MSTest
             expected.Add("Pooja");
             expected.Add("Kabir");
             expected.Equals(actual);
+        }
+        /// In this test, the GetCount method is called and
+        /// query is passed to get count of the people from a city
+        /// It is checked whether it is returning the corect count or not
+        [TestMethod]
+        public void GivenQueryGivesCountOfPeopleFromACity() {
+            int expected = adapter.GetCount(@"select count(first_name) from Address_Model where city ='Kolkata'");
+            int actual = 2;
+            Assert.AreEqual(expected, actual);
+        }
+        /// In this test, the GetCount method is called and
+        /// query is passed to get count of the people from a state
+        /// It is checked whether it is returning the corect count or not
+        [TestMethod]
+        public void GivenQueryGivesCountOfPeopleFromAState()
+        {
+            int expected = adapter.GetCount(@"select count(first_name) from Address_Model where state ='WB'");
+            int actual = 3;
+            Assert.AreEqual(expected, actual);
         }
     }
 }

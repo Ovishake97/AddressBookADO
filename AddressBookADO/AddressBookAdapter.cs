@@ -145,7 +145,44 @@ namespace AddressBookADO
                     this.connection.Close();
                 }
 
+            }
+        }
+        /// Method to return the count according to 
+        /// any query. The query is passed
+        /// as a parameter
+        public int GetCount(string query)
+        {
+            int count = 0;
+            try
+            {
+                using (connection)
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+                    this.connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            count = reader.GetInt32(0);
+                        }
+                        reader.Close();
+                        return count;
+                    }
+                    else
+                    {
+                        throw new Exception("Invalid query");
+                    }
 
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                this.connection.Close();
             }
         }
     }
