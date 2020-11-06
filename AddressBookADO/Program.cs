@@ -8,14 +8,14 @@ namespace AddressBookADO
         {
             AddressBookAdapter adapter = new AddressBookAdapter();
             AddressBookModel model = new AddressBookModel();
-            model.firstName = "Nikhil";
-            model.lastName = "Prasad";
-            model.address = "HN 32";
-            model.city = "Agra";
-            model.state = "UP";
-            model.zip = 13413;
-            model.phone = 658366;
-            model.emailid = "np@gmail.com";
+            model.firstName = "Kabir";
+            model.lastName = "Sanyal";
+            model.address = "HN 113";
+            model.city = "Asansol";
+            model.state = "WB";
+            model.zip = 98723;
+            model.phone = 917412;
+            model.emailid = "ksan@gmail.com";
             string result = adapter.AddAddress(model);
             Console.WriteLine(result);
         }
