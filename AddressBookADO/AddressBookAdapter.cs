@@ -104,5 +104,49 @@ namespace AddressBookADO
                 }
             }
         }
+        /// Accepts query as a parameter and returns the list of the people
+        /// satisfying the particular query
+        public List<string> GetPersons(string query)
+        {
+            List<string> records = new List<string>();
+            AddressBookModel model = new AddressBookModel();
+            using (connection)
+            {
+                try
+                {
+                    using (connection)
+                    {
+                        SqlCommand command = new SqlCommand(query, connection);
+                        this.connection.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                model.firstName = reader.GetString(0);
+                                records.Add(model.firstName);
+                            }
+                            reader.Close();
+                            return records;
+                        }
+                        else
+                        {
+                            throw new Exception("Invalid query");
+                        }
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    this.connection.Close();
+                }
+
+
+            }
+        }
     }
 }

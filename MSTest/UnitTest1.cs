@@ -1,5 +1,6 @@
 using AddressBookADO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace MSTest
 {
@@ -49,6 +50,24 @@ namespace MSTest
         public void GivenQueryDeletesRowFromTable() {
             bool result = adapter.UpdateTable(@"delete from Address_Model where first_name ='Nikhil'");
             Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void GivenQueryGivesPeopleFromACity() {
+            List<string> expected = new List<string>();
+            List<string> actual = adapter.GetPersons(@"select first_name from Address_Model where city ='Kolkata'");
+            expected.Add("Akhil");
+            expected.Add("Pooja");
+            expected.Equals(actual);
+        }
+        [TestMethod]
+        public void GivenQueryGivesPeopleFromAState()
+        {
+            List<string> expected = new List<string>();
+            List<string> actual = adapter.GetPersons(@"select first_name from Address_Model where state ='WB'");
+            expected.Add("Akhil");
+            expected.Add("Pooja");
+            expected.Add("Kabir");
+            expected.Equals(actual);
         }
     }
 }
