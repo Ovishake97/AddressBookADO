@@ -78,14 +78,15 @@ namespace AddressBookADO
                 throw new Exception(ex.Message);
             }
         }
-        public bool UpdateTable()
+        ///Method defined to edit the table accordingly by passing any query 
+        ///and returning true if any number of rows are affected
+        public bool UpdateTable(string query)
         {
             using (this.connection)
             {
                 try
                 {
                     this.connection.Open();
-                    string query = @"update Address_Model set city='Silchar' where first_name ='Jatin'";
                     SqlCommand command = new SqlCommand(query,this.connection);
                     int numberOfEffectedRows = command.ExecuteNonQuery();
                     if (numberOfEffectedRows != 0)

@@ -43,5 +43,12 @@ namespace MSTest
             bool result = adapter.UpdateTable(@"update Address_Model set city='Silchar' where first_name ='Jatin'");
             Assert.IsTrue(result);
         }
+        /// The UpdateTable method has been called and an delete query is passed
+        /// The test checks whether any row is affected or not
+        [TestMethod]
+        public void GivenQueryDeletesRowFromTable() {
+            bool result = adapter.UpdateTable(@"delete from Address_Model where first_name ='Nikhil'");
+            Assert.IsTrue(result);
+        }
     }
 }
