@@ -6,12 +6,13 @@ using System.Text;
 
 namespace AddressBookADO
 {
-   public class AddressBookAdapter
+    public class AddressBookAdapter
     {
         public static string connectionString = "Server=(localdb)\\MSSQLLocalDB; Initial Catalog =address_book_service; User ID = AkSharma; Password=abhishek123";
-       public SqlConnection connection = new SqlConnection(connectionString);
-     /// Function to create table 
-        public bool CreateTable() {
+        public SqlConnection connection = new SqlConnection(connectionString);
+        /// Function to create table 
+        public bool CreateTable()
+        {
             string query = @"CREATE TABLE dbo.Address_Model
                 (
                     first_name varchar(30),
@@ -24,17 +25,18 @@ namespace AddressBookADO
                     emailid varchar(30)
                 );";
             SqlCommand command = new SqlCommand(query, this.connection);
-            
+
             try
             {
-               this.connection.Open();
-              int numberOfExecutedRows=command.ExecuteNonQuery();
+                this.connection.Open();
+                int numberOfExecutedRows = command.ExecuteNonQuery();
 
                 if (numberOfExecutedRows != 0)
                 {
                     return true;
                 }
-                else {
+                else
+                {
                     return false;
                 }
             }
@@ -44,25 +46,30 @@ namespace AddressBookADO
             }
             finally
             {
-               this.connection.Close();
-                
+                this.connection.Close();
+
             }
         }
-        public string AddAddress(AddressBookModel model) {
+        /// Method defined to add data and on adding
+        /// returns success message
+        public string AddAddress(AddressBookModel model)
+        {
             try
             {
                 using (this.connection)
                 {
-                    SqlCommand command = new SqlCommand("sp.InsertValues", this.connection);
+                    this.connection.Open();
+                    SqlCommand command = new SqlCommand("dbo.AddressBookHandilng", this.connection);
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@first_name", model.firstName);
-                    command.Parameters.AddWithValue("@last_name",model.lastName);
+                    command.Parameters.AddWithValue("@last_name", model.lastName);
                     command.Parameters.AddWithValue("@address", model.address);
                     command.Parameters.AddWithValue("@city", model.city);
                     command.Parameters.AddWithValue("@state", model.state);
                     command.Parameters.AddWithValue("@zip", model.zip);
                     command.Parameters.AddWithValue("@phone", model.phone);
                     command.Parameters.AddWithValue("@emailid", model.emailid);
+                    command.ExecuteNonQuery();
                     return "Added succesfully";
                 }
             }
@@ -71,6 +78,30 @@ namespace AddressBookADO
                 throw new Exception(ex.Message);
             }
         }
+        public bool UpdateTable()
+        {
+            using (this.connection)
+            {
+                try
+                {
+                    this.connection.Open();
+                    string query = @"update Address_Model set city='Silchar' where first_name ='Jatin'";
+                    SqlCommand command = new SqlCommand(query,this.connection);
+                    int numberOfEffectedRows = command.ExecuteNonQuery();
+                    if (numberOfEffectedRows != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+        }
     }
-    }
-
+}

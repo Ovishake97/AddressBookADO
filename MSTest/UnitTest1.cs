@@ -36,5 +36,12 @@ namespace MSTest
             string result = adapter.AddAddress(model);
             Assert.AreEqual(result, "Added succesfully");
         }
+        /// The UpdateTable method has been called and an update query is passed
+        /// The test checks whether any row is affected or not
+        [TestMethod]
+        public void GivenQueryUpdatesTable() {
+            bool result = adapter.UpdateTable(@"update Address_Model set city='Silchar' where first_name ='Jatin'");
+            Assert.IsTrue(result);
+        }
     }
 }
